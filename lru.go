@@ -92,6 +92,13 @@ func (c *Cache) Remove(key interface{}) {
 	c.lock.Unlock()
 }
 
+// GetOldest returns the oldest item from the cache.
+func (c *Cache) GetOldest() (key interface{}, value interface{}, evict bool) {
+	c.lock.Lock()
+	defer c.lock.Unlock()
+	return c.lru.GetOldest()
+}
+
 // RemoveOldest removes the oldest item from the cache.
 func (c *Cache) RemoveOldest() {
 	c.lock.Lock()
